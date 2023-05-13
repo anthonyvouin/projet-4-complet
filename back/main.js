@@ -211,6 +211,29 @@ app.delete("/deleteImage/:imageId", async (request, reply) => {
   }
 });
 
+// Get all no connecte soit isPublic true
+app.get("/images", async (request, reply) => {
+  try {
+    const images = await ImageUser.find({ isPublic: true });
+    const imageData = await Promise.all(
+      images.map(async (image) => {
+        return {
+          id: image._id,
+          name: image.name,
+          date: image.date,
+          isPublic: image.isPublic,
+          url: image.url,
+        };
+      })
+    );
+    reply.send(imageData);
+  } catch (error) {
+    console.log(error);
+    reply.status(500).send("Erreur serveur");
+  }
+});
+
+
 // Start the Express server
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
