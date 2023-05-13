@@ -10,7 +10,6 @@ import { generateRandomString } from "./functions/url.js";
 import { imgUpload } from "./functions/images.js";
 import fs from "fs";
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -96,7 +95,7 @@ app.delete("/account", async (request, reply) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return reply.code(403).send("Authentification invalide");
+    return reply.status(403).send("Authentification invalide");
   }
 
   const token = authHeader.slice(7);
@@ -174,7 +173,7 @@ app.delete("/deleteImage/:imageId", async (request, reply) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return reply.code(403).status("Authentification invalide");
+    return reply.status(403).status("Authentification invalide");
   }
 
   const token = authHeader.slice(7);
@@ -233,9 +232,99 @@ app.get("/images", async (request, reply) => {
   }
 });
 
+// get all image for user
+app.get("/imagesUser", async (request, reply) => {
+  try {
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return reply.status(403).send("Authentification invalide");
+    }
+    // Vérifier que l'utilisateur est connecté et que son token JWT correspond bien à l'utilisateur en question
+    const token = authHeader.slice(7);
+
+    const decodedToken = jwt.verify(
+      token,
+      "16UQLq1HZ3CNwhvgrarV6pMoA2CDjb4tyF"
+    );
+
+    const userId = decodedToken.userId;
+    // Récupérer toutes les images, qu'elles soient publiques ou privées
+    const images = await ImageUser.find({ userId: userId });
+
+    // Construire le tableau de données à renvoyer
+    const imageData = await Promise.all(
+      images.map(async (image) => {
+        return {
+          id: image._id,
+          name: image.name,
+          date: image.date,
+          isPublic: image.isPublic,
+          url: image.url,
+        };
+      })
+    );
+
+    // Renvoyer les données
+    reply.send(imageData);
+  } catch (error) {
+    console.log(error);
+    reply.status(500).send("Erreur serveur");
+  }
+});
+
+// Update bool image
+app.put("/images/:id", async (request, reply) => {
+  try {
+    // Récupérer l'identifiant de l'image à mettre à jour depuis les paramètres de l'URL
+    const imageId = request.params.id;
+
+    // Vérifier que l'utilisateur est connecté et que son token JWT correspond bien à l'utilisateur en question
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return reply.status(403).send("Authentification invalide");
+    }
+
+    const token = authHeader.slice(7);
+
+    const decodedToken = jwt.verify(
+      token,
+      "16UQLq1HZ3CNwhvgrarV6pMoA2CDjb4tyF"
+    );
+
+    const userId = decodedToken.userId;
+
+    // Récupérer l'image correspondant à l'identifiant et vérifier que l'utilisateur est autorisé à la modifier
+    const image = await ImageUser.findById(imageId);
+
+    if (!image) {
+      return reply.status(404).send("Image non trouvée");
+    }
+
+    if (image.userId !== userId) {
+      return reply.status(403).send("Non autorisé à modifier cette image");
+    }
+
+    image.isPublic = !image.isPublic;
+
+    await image.save();
+
+    // Renvoyer la nouvelle version de l'image
+
+    reply.send({
+      id: image._id,
+      name: image.name,
+      date: image.date,
+      url: image.url,
+    });
+  } catch (error) {
+    console.log(error);
+    reply.status(500).send("Erreur serveur");
+  }
+});
 
 // Start the Express server
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
 });
-
