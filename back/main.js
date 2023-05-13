@@ -8,6 +8,8 @@ import jwt from "jsonwebtoken";
 import { imageDto } from "./models/imageDto.js";
 import { generateRandomString } from "./functions/url.js";
 import { imgUpload } from "./functions/images.js";
+import fs from "fs";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -112,18 +114,18 @@ app.delete("/account", async (request, reply) => {
 
     await Account.findByIdAndDelete(userId);
 
-    // const imagesAccount = await ImageUser.find({ userId: userId });
-    // imagesAccount.forEach(async (element) => {
-    //   fs.unlink(element.name, (err) => {
-    //     if (err) {
-    //       console.error(err);
-    //       return;
-    //     }
-    //     console.log("Le fichier a été supprimé avec succès");
-    //   });
+    const imagesAccount = await ImageUser.find({ userId: userId });
+    imagesAccount.forEach(async (element) => {
+      fs.unlink(element.name, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log("Le fichier a été supprimé avec succès");
+      });
 
-    //   await ImageUser.findByIdAndDelete(element.id);
-    // });
+      await ImageUser.findByIdAndDelete(element.id);
+    });
     reply.status(200).send("Compte supprimé avec succès !");
   } catch (error) {
     console.log(error);
@@ -167,10 +169,50 @@ app.post("/images", imgUpload, async (request, reply) => {
   reply.status(201).send("image enregistré");
 });
 
+// delete image
+app.delete("/deleteImage/:imageId", async (request, reply) => {
+  const authHeader = request.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return reply.code(403).status("Authentification invalide");
+  }
+
+  const token = authHeader.slice(7);
+
+  const decodedToken = jwt.verify(token, "16UQLq1HZ3CNwhvgrarV6pMoA2CDjb4tyF");
+
+  const userId = decodedToken.userId;
+
+  try {
+    const imageId = request.params.imageId;
+    const searchimageUser = await ImageUser.findById(imageId);
+
+    if (userId != searchimageUser.userId) {
+      return reply.status(403).send("interdit de supprimer image");
+    }
+    fs.unlink(searchimageUser.name, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log("Le fichier a été supprimé avec succès");
+    });
+    const image = await ImageUser.findByIdAndDelete(imageId);
+
+    if (!image) {
+      return reply.status(404).send("Image non trouvée");
+    }
+
+    reply.status(200).send("Image supprimée avec succès !");
+  } catch (error) {
+    console.log(error);
+
+    reply.status(401).send("Authentification invalide");
+  }
+});
+
 // Start the Express server
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
 });
 
-// next route
-//truc
