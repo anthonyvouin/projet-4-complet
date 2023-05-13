@@ -9,21 +9,15 @@ import { imageDto } from "./models/imageDto.js";
 import { generateRandomString } from "./functions/url.js";
 import { imgUpload } from "./functions/images.js";
 
-
-
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-
-
 // Definir le modele
 const Account = model("Account", AccountDto);
 const ImageUser = model("imageUser", imageDto);
-
 
 // Connect to the MongoDB database
 mongoose
@@ -177,3 +171,5 @@ app.post("/images", imgUpload, async (request, reply) => {
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
 });
+
+// next route
