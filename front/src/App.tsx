@@ -52,7 +52,7 @@ function App() {
         </div> */}
 
         <img
-          src={`http://localhost:3000/uploads/1683917463744-ff.JPG`}
+          src={`http://localhost:3000/uploads/1684250295920-Capture.JPG`}
           alt=""
         />
         <Routes>

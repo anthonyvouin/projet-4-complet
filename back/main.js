@@ -9,12 +9,21 @@ import { imageDto } from "./models/imageDto.js";
 import { generateRandomString } from "./functions/url.js";
 import { imgUpload } from "./functions/images.js";
 import fs from "fs";
+import cors from 'cors'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
+
+app.use(
+  cors({
+    origin: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+  })
+);
 
 // Definir le modele
 const Account = model("Account", AccountDto);
