@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 import serverAddress from "../../Services/Utile";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Profil() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     isAuthorised().then((res) => {
       console.log(res);
+      if (res == "connexion refusée") {
+        navigate("/");
+      }
     });
   }, []);
 
