@@ -333,6 +333,35 @@ app.put("/images/:id", async (request, reply) => {
   }
 });
 
+//Verify token
+app.get("/verify-token", async (request, reply) => {
+  try {
+     // Vérifier que l'utilisateur est connecté et que son token JWT correspond bien à l'utilisateur en question
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return reply.status(403).send("Authentification invalide");
+    }
+
+    const token = authHeader.slice(7);
+
+    const decodedToken = jwt.verify(
+      token,
+      "16UQLq1HZ3CNwhvgrarV6pMoA2CDjb4tyF"
+    );
+
+    const userId = decodedToken.userId;
+    if (!userId) {
+      reply.status(403).send("Refuse")
+    } else {
+      reply.status(200).send("Autorisé")
+    }
+  }
+  catch (e) {
+     reply.status(403).send("Refuse");
+  }
+})
+
 // Start the Express server
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
