@@ -1,64 +1,20 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import FirstComponent from "./Components/FirstComposent/FirstComposent";
-import InformationComposent from "./Components/InformationComposent/InformationComposent";
-import IfComponent from "./Components/IfComponent/IfComponent";
-import ListMapComponent from "./Components/ListMapComponent/ListMapComponent";
-import ExoComponent from "./Components/ExoComponent/ExoComponent";
-import ButtonComposent from "./Components/ButtonComposent/ButtonComposent";
-import CompteurComposent from "./Components/CompteurComposent/CompteurComposent";
-import { Route, Routes } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
-import { imagePublic } from "./Services/connexionService";
-import ImageUser from "./Models/ImageUser";
-import EffectComposent from "./Components/EffectComposent/EffectComposent";
+import React from "react";
+import AllGetImagePublic from "./Components/AllGetImagePublic/AllGetImagePublic";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import NewAccount from "./Components/NewAccount/NewAccount";
+import Login from "./Components/Login/Login";
+import Profil from "./Components/Profil/Profil";
 
 function App() {
-  // const [listImage, setListImage] = useState<ImageUser[]>();
-
-  // // useEffect(() => {
-  // //   imagePublic().then((res) => {
-  // //     console.log(res);
-  // //     setListImage(res);
-  // //   });
-  // // }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <p>       
-         
-
-          <ButtonComposent compteur={1} />
-        
-          <ExoComponent name={"chemist"} />
-          <FirstComponent />
-          <InformationComposent />
-          <ListMapComponent></ListMapComponent>
-        </p>
-                   */}
-
-        {/* <div className="image-container">
-          {listImage && listImage.length > 0 && (
-            <>
-              <img
-                src={`http://localhost:3000/uploads/1683917463744-ff.JPG`}
-                alt=""
-              />
-              <p>{listImage[0].name}</p>
-            </>
-          )}
-        </div> */}
-
-        <img
-          src={`http://localhost:3000/uploads/1684250295920-Capture.JPG`}
-          alt=""
-        />
-        <Routes>
-          <Route path="/test" element={<IfComponent />} />
-        </Routes>
-      </header>
+      <Routes>
+        <Route path="/createAccount" element={<NewAccount></NewAccount>} />
+        <Route path="/" element={<AllGetImagePublic></AllGetImagePublic>} />
+        <Route path="/login" element={<Login></Login>} />
+        <Route path="/profil" element={<Profil></Profil>} />
+      </Routes>
+      <header className="App-header"></header>
     </div>
   );
 }
