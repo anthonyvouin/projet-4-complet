@@ -340,7 +340,7 @@ app.get("/verify-token", async (request, reply) => {
     const authHeader = request.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return reply.status(403).send("Authentification invalide");
+      return reply.status(403).send({ response: "connexion refusée" });
     }
 
     const token = authHeader.slice(7);
@@ -352,13 +352,13 @@ app.get("/verify-token", async (request, reply) => {
 
     const userId = decodedToken.userId;
     if (!userId) {
-      reply.status(403).send("Refuse")
+      reply.status(403).send({ response: "connexion refusée" });
     } else {
-      reply.status(200).send("Autorisé")
+      reply.status(200).send({ response: "connexion autorisée" });
     }
   }
   catch (e) {
-     reply.status(403).send("Refuse");
+     reply.status(403).send({ response: "connexion refusée" });
   }
 })
 
