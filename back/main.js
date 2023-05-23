@@ -247,7 +247,7 @@ app.get("/imagesUser", async (request, reply) => {
     const authHeader = request.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return reply.status(403).send("Authentification invalide");
+      return reply.status(403).send({ response: "Authentification invalide" });
     }
     // Vérifier que l'utilisateur est connecté et que son token JWT correspond bien à l'utilisateur en question
     const token = authHeader.slice(7);
@@ -278,7 +278,7 @@ app.get("/imagesUser", async (request, reply) => {
     reply.send(imageData);
   } catch (error) {
     console.log(error);
-    reply.status(500).send("Erreur serveur");
+    reply.status(500).send({ response: "Erreur serveur" });
   }
 });
 
@@ -325,6 +325,7 @@ app.put("/images/:id", async (request, reply) => {
       id: image._id,
       name: image.name,
       date: image.date,
+      isPublic: image.isPublic,
       url: image.url,
     });
   } catch (error) {

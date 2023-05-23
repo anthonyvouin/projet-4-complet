@@ -34,7 +34,7 @@ export default function Login() {
         localStorage.setItem("token", token);
       
       // Effectuer d'autres actions en fonction de la réponse
-      navigate("/");
+      navigate("/profil");
     } catch (error) {
       console.log(error);
     }
