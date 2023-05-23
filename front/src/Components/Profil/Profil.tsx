@@ -32,7 +32,7 @@ export default function Profil() {
 
   return (
     <>
-      <p>Page Profil</p>
+      <h1>Page Profil</h1>
     </>
   );
 }

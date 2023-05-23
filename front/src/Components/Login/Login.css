@@ -1,0 +1,36 @@
+  body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      text-align: center;
+      padding: 20px;
+  }
+
+  /* Style du titre */
+  h1 {
+      color: black;
+      font-size: 24px;
+      margin-bottom: 20px;
+  }
+
+  /* Style des champs de saisie */
+  input {
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+  }
+
+  /* Style du bouton */
+  button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  button:hover {
+      background-color: #555;
+  }
