@@ -11,6 +11,8 @@ export default function Profil() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [listImage, setListeImage] = useState<ImageUser[]>();
+  const [droppedImage, setDroppedImage] = useState("");
+  const [imageFile, setImage] = useState<Blob | string>();
 
   useEffect(() => {
     isAuthorised().then((res) => {
@@ -65,11 +67,66 @@ export default function Profil() {
     });
   }
 
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    const imageFile = e.dataTransfer.files[0];
+    console.log(imageFile.name);
+    const imageUrl = URL.createObjectURL(imageFile);
+    setDroppedImage(imageUrl);
+    setImage(imageFile);
+  };
+
+  function sendImage() {
+    const url = serverAddress + "images"; // URL de l'endpoint de réception du fichier
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " +token,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        // Gérer la réponse de la requête ici
+      })
+      .catch((error) => {
+        // Gérer les erreurs ici
+      });
+  }
+
   return (
     <>
       <h1>Page Profil</h1>
       <button onClick={deconnexion}>Se déconnecter</button>
       <br />
+
+      <div>
+        {" "}
+        <div
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          style={{ width: "300px", height: "300px", border: "1px solid black" }}
+        >
+          {droppedImage ? (
+            <img
+              src={droppedImage}
+              alt="Dropped Image"
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <p>Drag and drop an image here</p>
+          )}
+        </div>
+        <button onClick={sendImage}>Envoyer l'image</button>
+      </div>
 
       <div className="image-container">
         {listImage
