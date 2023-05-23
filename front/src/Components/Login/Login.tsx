@@ -54,12 +54,14 @@ export default function Login() {
 
       <input
         type="text"
+        placeholder="Email"
         id="email"
         value={email}
         onChange={handleEmailChange}
       ></input>
       <input
         type="password"
+        placeholder="Mot de passe"
         id="password"
         value={password}
         onChange={handlePasswordChange}

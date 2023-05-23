@@ -16,18 +16,31 @@ export default function AllGetImagePublic() {
     }, []);
 
 
-  return (
-    <>
-      <Link to="/createAccount"> Inscription</Link>
-      <Link to="/login"> Connexion</Link>
-      <Link to="/profil"> Profil</Link> <br />
-      <div className="image-container">
-        {listImage
-          ? listImage.map((list) => (
-              <img src={serverAddress + listImage[0].name} alt="" />
-            ))
-          : ""}
-      </div>
-    </>
-  );
+ return (
+   <>
+     <header>
+       <nav>
+         <ul>
+           <li>
+             <Link to="/createAccount">Inscription</Link>
+           </li>
+           <li>
+             <Link to="/login">Connexion</Link>
+           </li>
+           <li>
+             <Link to="/profil">Profil</Link>
+           </li>
+         </ul>
+       </nav>
+     </header>
+     <div className="image-container">
+       {listImage
+         ? listImage.map((list, index) => (
+             <img key={index} src={serverAddress + list.name} alt="" />
+           ))
+         : ""}
+     </div>
+   </>
+ );
+
 }

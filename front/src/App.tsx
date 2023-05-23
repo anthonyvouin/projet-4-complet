@@ -14,7 +14,6 @@ function App() {
         <Route path="/login" element={<Login></Login>} />
         <Route path="/profil" element={<Profil></Profil>} />
       </Routes>
-      <header className="App-header"></header>
     </div>
   );
 }

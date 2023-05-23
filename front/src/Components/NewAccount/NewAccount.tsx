@@ -45,9 +45,21 @@ export default function NewAccount() {
     <>
       <h1>Page de création</h1>
 
-        <input type="text" id="email" value={email} onChange={handleEmailChange}></input>
-        <input type="password" id="password" value={password} onChange={handlePasswordChange}></input>
-        <button onClick={submit}>Se connecter</button>
+      <input
+        type="text"
+        placeholder="Email"
+        id="email"
+        value={email}
+        onChange={handleEmailChange}
+      ></input>
+      <input
+        type="password"
+        placeholder="Mot de passe"
+        id="password"
+        value={password}
+        onChange={handlePasswordChange}
+      ></input>
+      <button onClick={submit}>Se connecter</button>
     </>
   );
 }
