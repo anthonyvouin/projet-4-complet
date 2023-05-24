@@ -3,6 +3,7 @@ import serverAddress from "../../Services/Utile";
 import { useNavigate } from "react-router-dom";
 import "./Profil.css";
 
+
 import {
   changeVisibilityImageUser,
   imageByUser,
@@ -15,6 +16,8 @@ export default function Profil() {
   const [listImage, setListeImage] = useState<ImageUser[]>();
   const [droppedImage, setDroppedImage] = useState("");
   const [imageFile, setImage] = useState<Blob | string>();
+
+  
 
   useEffect(() => {
     isAuthorised().then((res) => {
@@ -143,6 +146,9 @@ export default function Profil() {
         // Gérer les erreurs ici
       });
   }
+
+
+ 
 
   return (
     <>
