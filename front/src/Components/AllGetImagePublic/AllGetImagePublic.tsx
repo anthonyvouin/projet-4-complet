@@ -34,6 +34,7 @@ export default function AllGetImagePublic() {
        </nav>
      </header>
      <div className="image-container">
+   
        {listImage
          ? listImage.map((list, index) => (
              <img key={index} src={serverAddress + list.name} alt="" />

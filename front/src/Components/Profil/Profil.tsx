@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import serverAddress from "../../Services/Utile";
 import { useNavigate } from "react-router-dom";
+import "./Profil.css";
+
+
 import {
   changeVisibilityImageUser,
   imageByUser,
@@ -104,6 +107,7 @@ export default function Profil() {
 
   return (
     <>
+      
       <h1>Page Profil</h1>
       <button onClick={deconnexion}>Se déconnecter</button>
       <br />
@@ -113,7 +117,12 @@ export default function Profil() {
         <div
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          style={{ width: "300px", height: "300px", border: "1px solid black" }}
+          style={{
+            width: "500px",
+            height: "500px",
+            border: "1px solid black",
+            marginLeft: "500px",
+          }}
         >
           {droppedImage ? (
             <img
@@ -132,12 +141,11 @@ export default function Profil() {
         {listImage
           ? listImage.map((list, index) => (
               <div>
+                <p>{list.isPublic ? "Public" : "Privé"}</p>
+                <img key={index} src={serverAddress + list.name} alt="" />
                 <button onClick={() => changeVibility(list.id)}>
                   Changer la visibilité
                 </button>
-
-                <p>{list.isPublic ? "Public" : "Privé"}</p>
-                <img key={index} src={serverAddress + list.name} alt="" />
               </div>
             ))
           : ""}

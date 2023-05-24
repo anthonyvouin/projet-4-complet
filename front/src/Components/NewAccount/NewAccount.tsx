@@ -42,7 +42,9 @@ export default function NewAccount() {
 
 
   return (
-    <>
+    <> 
+              <div className="container">
+
       <h1>Page de création</h1>
 
       <input
@@ -59,7 +61,8 @@ export default function NewAccount() {
         value={password}
         onChange={handlePasswordChange}
       ></input>
-      <button onClick={submit}>Se connecter</button>
+        <button onClick={submit}>Se connecter</button>
+        </div>
     </>
   );
 }

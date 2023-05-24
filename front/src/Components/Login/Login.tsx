@@ -50,6 +50,8 @@ export default function Login() {
 
   return (
     <>
+        <div className="container">
+
       <h1>Page de connexion</h1>
 
       <input
@@ -66,7 +68,8 @@ export default function Login() {
         value={password}
         onChange={handlePasswordChange}
       ></input>
-      <button onClick={submit}>Se connecter</button>
+        <button onClick={submit}>Se connecter</button>
+        </div>
     </>
   );
 }
