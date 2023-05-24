@@ -173,8 +173,15 @@ app.post("/images", imgUpload, async (request, reply) => {
     }
   }
   const newImage = new ImageUser({ date, name, isPublic, url, userId });
-  await newImage.save();
-  reply.status(201).send("image enregistré");
+ const image =  await newImage.save();
+  reply.status(201).send({
+    date: image.date,
+    isPublic: image.isPublic,
+    name: image.name,
+    url: image.url,
+    userId: image.userId,
+    id: image.id,
+  });
 });
 
 // delete image

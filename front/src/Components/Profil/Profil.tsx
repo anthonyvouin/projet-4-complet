@@ -3,7 +3,6 @@ import serverAddress from "../../Services/Utile";
 import { useNavigate } from "react-router-dom";
 import "./Profil.css";
 
-
 import {
   changeVisibilityImageUser,
   imageByUser,
@@ -93,12 +92,52 @@ export default function Profil() {
     fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Bearer " +token,
+        Authorization: "Bearer " + token,
       },
       body: formData,
     })
+      .then((response) => response.json())
+      .then((responseData: ImageUser) => {
+        setListeImage((prevState) => [...prevState!, responseData]);
+        setDroppedImage("");
+      })
+      .catch((error) => {
+        // Gérer les erreurs ici
+      });
+  }
+
+  function deleteAccount() {
+    const url = "http://localhost:3000/account";
+
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((response) => {
         // Gérer la réponse de la requête ici
+        localStorage.removeItem("token");
+        navigate("/");
+      })
+      .catch((error) => {
+        // Gérer les erreurs ici
+      });
+  }
+
+  function deleteImage(id: string | undefined) {
+    const url = "http://localhost:3000/deleteImage/" + id;
+
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then(() => {
+        setListeImage((prevState) =>
+          prevState!.filter((image) => image.id !== id)
+        );
       })
       .catch((error) => {
         // Gérer les erreurs ici
@@ -107,7 +146,6 @@ export default function Profil() {
 
   return (
     <>
-      
       <h1>Page Profil</h1>
       <button onClick={deconnexion}>Se déconnecter</button>
       <br />
@@ -121,7 +159,7 @@ export default function Profil() {
             width: "500px",
             height: "500px",
             border: "1px solid black",
-            marginLeft: "500px",
+            marginLeft: "510px",
           }}
         >
           {droppedImage ? (
@@ -146,10 +184,20 @@ export default function Profil() {
                 <button onClick={() => changeVibility(list.id)}>
                   Changer la visibilité
                 </button>
+                <button
+                  onClick={() => deleteImage(list.id)}
+                  style={{ backgroundColor: "purple" }}
+                >
+                  Supprimer une image
+                </button>
               </div>
             ))
           : ""}
       </div>
+
+      <button onClick={deleteAccount} style={{ backgroundColor: "red" }}>
+        Supprimer le compte
+      </button>
     </>
   );
 }
