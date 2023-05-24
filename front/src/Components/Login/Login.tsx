@@ -52,7 +52,7 @@ export default function Login() {
     <>
         <div className="container">
 
-      <h1>Page de connexion</h1>
+      <h1>Page de connexion </h1>
 
       <input
         type="text"
