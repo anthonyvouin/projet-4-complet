@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import serverAddress from "../../Services/Utile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Profil.css";
-
 
 import {
   changeVisibilityImageUser,
@@ -16,8 +15,6 @@ export default function Profil() {
   const [listImage, setListeImage] = useState<ImageUser[]>();
   const [droppedImage, setDroppedImage] = useState("");
   const [imageFile, setImage] = useState<Blob | string>();
-
-  
 
   useEffect(() => {
     isAuthorised().then((res) => {
@@ -148,14 +145,15 @@ export default function Profil() {
   }
 
 
- 
 
   return (
     <>
       <h1>Page Profil</h1>
+      <button onClick={deleteAccount} style={{ backgroundColor: "red" }}>
+        Supprimer le compte
+      </button>
       <button onClick={deconnexion}>Se déconnecter</button>
       <br />
-
       <div>
         {" "}
         <div
@@ -183,27 +181,48 @@ export default function Profil() {
 
       <div className="image-container">
         {listImage
-          ? listImage.map((list, index) => (
-              <div>
-                <p>{list.isPublic ? "Public" : "Privé"}</p>
-                <img key={index} src={serverAddress + list.name} alt="" />
-                <button onClick={() => changeVibility(list.id)}>
-                  Changer la visibilité
-                </button>
-                <button
-                  onClick={() => deleteImage(list.id)}
-                  style={{ backgroundColor: "purple" }}
-                >
-                  Supprimer une image
-                </button>
-              </div>
-            ))
+          ? listImage
+              .sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+
+                // Comparaison par mois
+                const monthComparison = dateB.getMonth() - dateA.getMonth();
+
+                // Si les mois sont différents, retourner la comparaison par mois
+                if (monthComparison !== 0) {
+                  return monthComparison;
+                }
+
+                // Comparaison par jour
+                return dateB.getDate() - dateA.getDate();
+              })
+              .map((list, index) => (
+                <div key={index} className="image-item">
+                  <p>{list.isPublic ? "Public" : "Privé"}</p>
+                  <Link to={`/image/${list.url}`}>
+                    <img src={serverAddress + list.name} alt="" />
+                  </Link>
+                  <p>
+                    Date:{" "}
+                    {new Date(list.date).toLocaleString("default", {
+                      day: "numeric",
+                      month: "long",
+                    })}
+                  </p>
+                  <button onClick={() => changeVibility(list.id)}>
+                    Changer la visibilité
+                  </button>
+                  <button
+                    onClick={() => deleteImage(list.id)}
+                    style={{ backgroundColor: "purple" }}
+                  >
+                    Supprimer une image
+                  </button>
+                </div>
+              ))
           : ""}
       </div>
-
-      <button onClick={deleteAccount} style={{ backgroundColor: "red" }}>
-        Supprimer le compte
-      </button>
     </>
   );
 }

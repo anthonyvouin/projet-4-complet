@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import NewAccount from "./Components/NewAccount/NewAccount";
 import Login from "./Components/Login/Login";
 import Profil from "./Components/Profil/Profil";
+import OneImage from "./Components/OneImage/OneImage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/image/:slug" element={<OneImage></OneImage>} />
         <Route path="/createAccount" element={<NewAccount></NewAccount>} />
         <Route path="/" element={<AllGetImagePublic></AllGetImagePublic>} />
         <Route path="/login" element={<Login></Login>} />

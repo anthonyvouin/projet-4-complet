@@ -374,3 +374,50 @@ app.get("/verify-token", async (request, reply) => {
 app.listen(PORT, () => {
   console.log("Server listening on port 3000");
 });
+
+// get slug
+app.get("/image/:slug", async (request, reply) => {
+  try {
+    const slug = request.params.slug;
+    const image = await ImageUser.findOne({ url: slug });
+
+      const authHeader = request.headers.authorization;
+
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return reply.status(403).send({ response: "connexion refusée" });
+      }
+
+      const token = authHeader.slice(7);
+
+      const decodedToken = jwt.verify(
+        token,
+        "16UQLq1HZ3CNwhvgrarV6pMoA2CDjb4tyF"
+      );
+
+    const userId = decodedToken.userId;
+    
+    console.log(userId);
+
+
+
+    if (image) {
+      if (image.isPublic || (userId && userId == image.userId)) {
+        reply.status(200).send({
+          date: image.date,
+          isPublic: image.isPublic,
+          name: image.name,
+          url: image.url,
+          userId: image.userId,
+          id: image.id,
+        });
+      } else {
+        reply.status(403).send({ response: "rrrr" });
+      }
+    } else {
+      reply.status(403).send({ response: "interdit" });
+    }
+  } catch (error) {
+    console.log(error);
+    reply.status(500).send({ response: "Erreur serveur" });
+  }
+});

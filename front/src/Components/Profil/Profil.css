@@ -63,10 +63,12 @@ button:hover {
 }
 
 .image-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
+    display: grid;
+    display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* Trois colonnes égales */
+        grid-gap: 10px;
+        /* Espacement entre les images */
 }
 
 .image-container>div {

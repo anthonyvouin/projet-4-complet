@@ -34,3 +34,16 @@ export async function changeVisibilityImageUser(id : string | undefined) {
     const responseData = await response.json();
     return responseData;
 }
+
+
+export async function getOneImage(slug: string) {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${serverAddress}image/${slug}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const monImage = response.json();
+  return monImage;
+}
