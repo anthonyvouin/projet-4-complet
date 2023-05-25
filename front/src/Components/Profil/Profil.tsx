@@ -204,7 +204,6 @@ export default function Profil() {
                   })
                   .map((list, index) => (
                     <div key={index} className="image-item-profil">
-                      <p>{list.isPublic ? "Public" : "Privé"}</p>
                       <Link to={`/image/${list.url}`}>
                         <img
                           src={serverAddress + list.name}
@@ -212,6 +211,7 @@ export default function Profil() {
                           className="image-item-image-profil"
                         />
                       </Link>
+                      <p>{list.isPublic ? "Public" : "Privé"}</p>
                       <p>
                         Date:{" "}
                         {new Date(list.date).toLocaleString("default", {
