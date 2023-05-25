@@ -1,0 +1,74 @@
+/* Profil.css */
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.delete-account-button-profil {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.logout-button-profil {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.image-upload-container-profil {
+    border: 2px dashed gray;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dropped-image-profil {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.dropzone-text-profil {
+    color: gray;
+}
+
+.send-image-button-profil {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+}
+
+.image-container-profil {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-item-profil {
+    flex: 0 0 25%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.image-item pw {
+    margin-bottom: 10px;
+}
+
+.image-item-image-profil {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.change-visibility-button-profil {
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.delete-image-button-profil {
+    background-color: purple;
+    color: white;
+    padding: 5px 10px;
+}

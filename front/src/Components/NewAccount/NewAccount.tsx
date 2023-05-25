@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Users from "../../Models/Users";
 import { useNavigate } from "react-router-dom";
 import serverAddress from "../../Services/Utile";
+import "./NewAccount.css";
+
 
 
 export default function NewAccount() {
@@ -42,27 +44,30 @@ export default function NewAccount() {
 
 
   return (
-    <> 
-              <div className="container">
+    <>
+      <div className="container-account">
+        <h1>Page de création</h1>
 
-      <h1>Page de création</h1>
-
-      <input
-        type="text"
-        placeholder="Email"
-        id="email"
-        value={email}
-        onChange={handleEmailChange}
-      ></input>
-      <input
-        type="password"
-        placeholder="Mot de passe"
-        id="password"
-        value={password}
-        onChange={handlePasswordChange}
-      ></input>
-        <button onClick={submit}>Se connecter</button>
-        </div>
+        <input
+          type="text"
+          placeholder="Email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+          className="new-account-input"
+        ></input>
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          id="password"
+          value={password}
+          onChange={handlePasswordChange}
+          className="new-account-input"
+        ></input>
+        <button onClick={submit} className="new-account-button">
+          Créer un compte
+        </button>
+      </div>
     </>
   );
 }

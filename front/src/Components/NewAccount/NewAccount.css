@@ -1,4 +1,4 @@
-.container-login {
+.container-account {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,7 +12,7 @@ h1 {
     font-weight: bold;
 }
 
-.login-input {
+.new-account-input {
     width: 300px;
     height: 40px;
     margin-bottom: 10px;
@@ -21,7 +21,7 @@ h1 {
     border: 1px solid #ccc;
 }
 
-.login-button {
+.new-account-button {
     width: 150px;
     height: 40px;
     margin-top: 10px;
@@ -33,6 +33,6 @@ h1 {
     cursor: pointer;
 }
 
-.login-button:hover {
+.new-account-button:hover {
     background-color: #0056b3;
 }

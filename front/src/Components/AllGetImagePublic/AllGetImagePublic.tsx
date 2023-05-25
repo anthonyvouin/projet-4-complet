@@ -5,47 +5,46 @@ import serverAddress from "../../Services/Utile";
 import { Link } from "react-router-dom";
 import "./AllGetImagePublic.css";
 
-
 export default function AllGetImagePublic() {
+  const [listImage, setListeImage] = useState<ImageUser[]>();
+  useEffect(() => {
+    imagePublic().then((res) => {
+      setListeImage(res);
+    });
+  }, []);
 
-    const [listImage, setListeImage] = useState<ImageUser[]>();
-    useEffect(() => {
-        imagePublic().then((res) => {
-            setListeImage(res);
-        });
-    }, []);
-
-
- return (
-   <>
-     <header>
-       <nav>
-         <ul>
-           <li>
-             <Link to="/createAccount">Inscription</Link>
-           </li>
-           <li>
-             <Link to="/login">Connexion</Link>
-           </li>
-           <li>
-             <Link to="/profil">Profil</Link>
-           </li>
-         </ul>
-       </nav>
-     </header>
-     <div className="image-container">
-       {listImage
-         ? listImage.map((list, index) => (
-             <div>
-             <Link to={`/image/${list.url}`}>
-
-                 <img key={index} src={serverAddress + list.name} alt="" />
-               </Link>
-             </div>
-           ))
-         : ""}
-     </div>
-   </>
- );
-
+  return (
+    <>
+      <header className="header">
+        <nav className="nav">
+          <ul className="nav-list">
+            <li>
+              <Link to="/createAccount">Inscription</Link>
+            </li>
+            <li>
+              <Link to="/login">Connexion</Link>
+            </li>
+            <li>
+              <Link to="/profil">Profil</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div className="image-container">
+        {listImage ? (
+          <div className="grid">
+            {listImage.map((list, index) => (
+              <div key={index} className="image-item">
+                <Link to={`/image/${list.url}`}>
+                  <img src={serverAddress + list.name} alt="" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    </>
+  );
 }

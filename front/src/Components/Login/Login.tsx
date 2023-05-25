@@ -50,26 +50,29 @@ export default function Login() {
 
   return (
     <>
-        <div className="container">
+      <div className="container-login">
+        <h1>Page de connexion</h1>
 
-      <h1>Page de connexion </h1>
-
-      <input
-        type="text"
-        placeholder="Email"
-        id="email"
-        value={email}
-        onChange={handleEmailChange}
-      ></input>
-      <input
-        type="password"
-        placeholder="Mot de passe"
-        id="password"
-        value={password}
-        onChange={handlePasswordChange}
-      ></input>
-        <button onClick={submit}>Se connecter</button>
-        </div>
+        <input
+          type="text"
+          placeholder="Email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+          className="login-input"
+        ></input>
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          id="password"
+          value={password}
+          onChange={handlePasswordChange}
+          className="login-input"
+        ></input>
+        <button onClick={submit} className="login-button">
+          Se connecter
+        </button>
+      </div>
     </>
   );
 }

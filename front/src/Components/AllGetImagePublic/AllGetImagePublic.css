@@ -1,138 +1,44 @@
-/* Login.css */
-
-header {
+.header {
     background-color: #007bff;
     padding: 10px;
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-nav li {
-    margin-left: 10px;
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
 }
 
-nav a {
+.nav-list a {
+    color: #fff;
     text-decoration: none;
-    color: #fff;
-    padding: 5px;
-    border: 1px solid#fff;
-    border-radius: 4px;
-}
-
-nav a:hover {
-    background-color: #333;
-    color: #fff;
 }
 
 .image-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
-}
-
-.image-container img {
-    width: 300px;
-    height: 200px;
-    margin: 10px;
-    object-fit: cover;
-}
-
-
-/* Profil.css */
-
-/* Login.css */
-
-.container {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 50vh;
 }
 
-h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-input {
-    display: block;
-    width: 300px;
-    padding: 10px;
-    margin: 10px auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.image-upload-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px auto;
-    width: 300px;
-    height: 300px;
-    border: 1px solid black;
-}
-
-.image-upload-container p {
-    margin-top: 0;
-    text-align: center;
-}
-
-.image-upload-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image-container {
-    display: grid;
+.grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* Trois colonnes égales */
-    grid-gap: 10px;
-    /* Espacement entre les images */
+    grid-gap: 20px;
 }
 
-.image-container>div {
+.image-item {
+    display: flex;
+    justify-content: center;
     margin: 10px;
-    text-align: center;
 }
 
-.image-container button {
-    margin-top: 10px;
-}
-
-.image-container p {
-    margin-top: 0;
-    text-align: center;
-}
-
-/* Ajout du style spécifique pour le drag and drop */
-.image-upload-container.drag-over {
-    background-color: lightgray;
+.image-item img {
+    width: 100%;
+    height: auto;
 }

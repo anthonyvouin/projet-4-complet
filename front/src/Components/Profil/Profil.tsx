@@ -145,41 +145,43 @@ export default function Profil() {
   }
 
 
+  
 
-  return (
-    <>
+    return (
+     <>
       <h1>Page Profil</h1>
-      <button onClick={deleteAccount} style={{ backgroundColor: "red" }}>
+      <button
+        onClick={deleteAccount}
+        className="delete-account-button-profil"
+      >
         Supprimer le compte
       </button>
-      <button onClick={deconnexion}>Se déconnecter</button>
+      <button onClick={deconnexion} className="logout-button-profil">
+        Se déconnecter
+      </button>
       <br />
       <div>
-        {" "}
         <div
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          style={{
-            width: "500px",
-            height: "500px",
-            border: "1px solid black",
-            marginLeft: "510px",
-          }}
+          className="image-upload-container-profil"
         >
           {droppedImage ? (
             <img
               src={droppedImage}
               alt="Dropped Image"
-              style={{ width: "100%", height: "100%" }}
+              className="dropped-image-profil"
             />
           ) : (
-            <p>Drag and drop an image here</p>
+            <p className="dropzone-text-profil">Drag and drop an image here</p>
           )}
+          <button onClick={sendImage} className="send-image-button-profil">
+            Envoyer l'image
+          </button>
         </div>
-        <button onClick={sendImage}>Envoyer l'image</button>
       </div>
 
-      <div className="image-container">
+      <div className="image-container-profil">
         {listImage
           ? listImage
               .sort((a, b) => {
@@ -198,10 +200,14 @@ export default function Profil() {
                 return dateB.getDate() - dateA.getDate();
               })
               .map((list, index) => (
-                <div key={index} className="image-item">
+                <div key={index} className="image-item-profil">
                   <p>{list.isPublic ? "Public" : "Privé"}</p>
                   <Link to={`/image/${list.url}`}>
-                    <img src={serverAddress + list.name} alt="" />
+                    <img
+                      src={serverAddress + list.name}
+                      alt=""
+                      className="image-item-image-profil"
+                    />
                   </Link>
                   <p>
                     Date:{" "}
@@ -210,12 +216,15 @@ export default function Profil() {
                       month: "long",
                     })}
                   </p>
-                  <button onClick={() => changeVibility(list.id)}>
+                  <button
+                    onClick={() => changeVibility(list.id)}
+                    className="change-visibility-button-profil"
+                  >
                     Changer la visibilité
                   </button>
                   <button
                     onClick={() => deleteImage(list.id)}
-                    style={{ backgroundColor: "purple" }}
+                    className="delete-image-button-profil"
                   >
                     Supprimer une image
                   </button>
@@ -226,3 +235,9 @@ export default function Profil() {
     </>
   );
 }
+
+
+
+
+
+
