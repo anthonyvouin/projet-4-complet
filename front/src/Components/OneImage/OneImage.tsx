@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ImageUser from "../../Models/ImageUser";
 import { getOneImage } from "../../Services/connexionService";
 import serverAddress from "../../Services/Utile";
+import "./OneImage.css";
+
 
 export default function OneImage() {
     const [image, setListImage] = useState<ImageUser>();
@@ -15,9 +17,10 @@ export default function OneImage() {
         });
     }, []);
     return (
-        <>
-            lala
-            <img width={40} src={serverAddress + image?.name} alt="" />
-        </>
+      <>
+        <div className="oneImage">
+          <img width={40} src={serverAddress + image?.name} alt="" />
+        </div>
+      </>
     );
 }
