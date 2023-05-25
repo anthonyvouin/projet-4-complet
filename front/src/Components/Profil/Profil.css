@@ -4,6 +4,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.container-profil {
+    margin: 15px;
+}
+
 .delete-account-button-profil {
     background-color: red;
     color: white;

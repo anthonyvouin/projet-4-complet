@@ -148,92 +148,96 @@ export default function Profil() {
   
 
     return (
-     <>
-      <h1>Page Profil</h1>
-      <button
-        onClick={deleteAccount}
-        className="delete-account-button-profil"
-      >
-        Supprimer le compte
-      </button>
-      <button onClick={deconnexion} className="logout-button-profil">
-        Se déconnecter
-      </button>
-      <br />
-      <div>
-        <div
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          className="image-upload-container-profil"
-        >
-          {droppedImage ? (
-            <img
-              src={droppedImage}
-              alt="Dropped Image"
-              className="dropped-image-profil"
-            />
-          ) : (
-            <p className="dropzone-text-profil">Drag and drop an image here</p>
-          )}
-          <button onClick={sendImage} className="send-image-button-profil">
-            Envoyer l'image
+      <>
+        <div className="container-profil">
+          <h1>Page Profil</h1>
+          <button
+            onClick={deleteAccount}
+            className="delete-account-button-profil"
+          >
+            Supprimer le compte
           </button>
+          <button onClick={deconnexion} className="logout-button-profil">
+            Se déconnecter
+          </button>
+          <br />
+          <div>
+            <div
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              className="image-upload-container-profil"
+            >
+              {droppedImage ? (
+                <img
+                  src={droppedImage}
+                  alt="Dropped Image"
+                  className="dropped-image-profil"
+                />
+              ) : (
+                <p className="dropzone-text-profil">
+                  Drag and drop an image here
+                </p>
+              )}
+              <button onClick={sendImage} className="send-image-button-profil">
+                Envoyer l'image
+              </button>
+            </div>
+          </div>
+
+          <div className="image-container-profil">
+            {listImage
+              ? listImage
+                  .sort((a, b) => {
+                    const dateA = new Date(a.date);
+                    const dateB = new Date(b.date);
+
+                    // Comparaison par mois
+                    const monthComparison = dateB.getMonth() - dateA.getMonth();
+
+                    // Si les mois sont différents, retourner la comparaison par mois
+                    if (monthComparison !== 0) {
+                      return monthComparison;
+                    }
+
+                    // Comparaison par jour
+                    return dateB.getDate() - dateA.getDate();
+                  })
+                  .map((list, index) => (
+                    <div key={index} className="image-item-profil">
+                      <p>{list.isPublic ? "Public" : "Privé"}</p>
+                      <Link to={`/image/${list.url}`}>
+                        <img
+                          src={serverAddress + list.name}
+                          alt=""
+                          className="image-item-image-profil"
+                        />
+                      </Link>
+                      <p>
+                        Date:{" "}
+                        {new Date(list.date).toLocaleString("default", {
+                          day: "numeric",
+                          month: "long",
+                        })}
+                      </p>
+                      <button
+                        onClick={() => changeVibility(list.id)}
+                        className="change-visibility-button-profil"
+                      >
+                        Changer la visibilité
+                      </button>
+                      <button
+                        onClick={() => deleteImage(list.id)}
+                        className="delete-image-button-profil"
+                      >
+                        Supprimer une image
+                      </button>
+                    </div>
+                  ))
+              : ""}
+          </div>
         </div>
-      </div>
-
-      <div className="image-container-profil">
-        {listImage
-          ? listImage
-              .sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-
-                // Comparaison par mois
-                const monthComparison = dateB.getMonth() - dateA.getMonth();
-
-                // Si les mois sont différents, retourner la comparaison par mois
-                if (monthComparison !== 0) {
-                  return monthComparison;
-                }
-
-                // Comparaison par jour
-                return dateB.getDate() - dateA.getDate();
-              })
-              .map((list, index) => (
-                <div key={index} className="image-item-profil">
-                  <p>{list.isPublic ? "Public" : "Privé"}</p>
-                  <Link to={`/image/${list.url}`}>
-                    <img
-                      src={serverAddress + list.name}
-                      alt=""
-                      className="image-item-image-profil"
-                    />
-                  </Link>
-                  <p>
-                    Date:{" "}
-                    {new Date(list.date).toLocaleString("default", {
-                      day: "numeric",
-                      month: "long",
-                    })}
-                  </p>
-                  <button
-                    onClick={() => changeVibility(list.id)}
-                    className="change-visibility-button-profil"
-                  >
-                    Changer la visibilité
-                  </button>
-                  <button
-                    onClick={() => deleteImage(list.id)}
-                    className="delete-image-button-profil"
-                  >
-                    Supprimer une image
-                  </button>
-                </div>
-              ))
-          : ""}
-      </div>
-    </>
-  );
+      </>
+    );
 }
 
 
